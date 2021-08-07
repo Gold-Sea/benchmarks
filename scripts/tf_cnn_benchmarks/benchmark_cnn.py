@@ -746,15 +746,16 @@ def create_config_proto(params):
   config.experimental.collective_group_leader = '/job:worker/replica:0/task:0'
   config.gpu_options.experimental.collective_ring_order = params.gpu_indices
   config.gpu_options.force_gpu_compatible = params.force_gpu_compatible
+  config.gpu_options.per_process_gpu_memory_fraction=0.4
   config.experimental.use_numa_affinity = params.use_numa_affinity
   if params.device == 'cpu':
     # TODO(tucker): change num_gpus to num_devices
     config.device_count['CPU'] = params.num_gpus
   if params.allow_growth is not None:
     config.gpu_options.allow_growth = params.allow_growth
-  if params.gpu_memory_frac_for_testing > 0:
-    config.gpu_options.per_process_gpu_memory_fraction = (
-        params.gpu_memory_frac_for_testing)
+  # if params.gpu_memory_frac_for_testing > 0:
+  #   config.gpu_options.per_process_gpu_memory_fraction = (
+  #       params.gpu_memory_frac_for_testing)
   if params.use_unified_memory:
     config.gpu_options.experimental.use_unified_memory = (
         params.use_unified_memory)
